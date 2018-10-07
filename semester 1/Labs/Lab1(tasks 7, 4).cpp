@@ -56,11 +56,13 @@ public:
     void AddVertex(Typename vertex);
     void AddEdge(int vertexNumber1, int vertexNumber2);
     void PrintAdjacencyStruct();
+    void PrintAdjacencyMatrix();
     void CheckConnectivity();
 
 private:
     vector<Typename> vertex;
     vector<List<int>* > neighbours;
+    vector<vector<bool> > adjacencyMatrix; // storing a graph simultaneously as adjacency structure and adjacency matrix
 };
 
 ///----------------------------------------class List methods-------------------------------------------------
@@ -124,7 +126,9 @@ Graph<Typename>::~Graph()
     for (int i = 0; i < neighbours.size(); i++)
     {
         neighbours[i]->~List();
+        adjacencyMatrix[i].clear();
     }
+    adjacencyMatrix.clear();
     neighbours.clear();
     vertex.clear();
 }
@@ -132,10 +136,14 @@ Graph<Typename>::~Graph()
 template <typename Typename>
 void Graph<Typename>::AddVertex(Typename vertex)
 {
-    this->vertex.push_back(vertex);
-    List<int>* toPush = new List<int>();
-    toPush->Append(this->vertex.size() - 1); // This means that numeration of vertices in graph starts from 0
-    neighbours.push_back(toPush);
+    this->vertex.push_back(vertex); // adding vertex
+
+    List<int>* listToPush = new List<int>(); // creating list of neighbours for the new vertex
+    listToPush->Append(this->vertex.size() - 1); // This means that numeration of vertices in graph starts from 0
+    neighbours.push_back(listToPush); // adding the list to the adjacency vector
+
+    vector<bool> vectorToPush; // creating boolean vector to push it back to the adjacency matrix
+    adjacencyMatrix.push_back(vectorToPush); // pushing it back
 }
 
 template <typename Typename>
@@ -151,16 +159,36 @@ void Graph<Typename>::AddEdge(int vertexNumber1, int vertexNumber2)
         cout << "Can not add an edge to vertex with number " <<  vertexNumber2 << "(there is no such vertex in the graph)" << endl;
         return;
     }
-    neighbours[vertexNumber1]->Append(vertexNumber2);
+
+    neighbours[vertexNumber1]->Append(vertexNumber2); // adding an edge to the adjacency structure
     neighbours[vertexNumber2]->Append(vertexNumber1);
+
+    adjacencyMatrix[vertexNumber1][vertexNumber2] = true; // adding an edge to the adjacency matrix
+    adjacencyMatrix[vertexNumber2][vertexNumber1] = true;
 }
 
 template <typename Typename>
 void Graph<Typename>::PrintAdjacencyStruct()
 {
+    cout << "Printing graph as adjacency structure:" << endl;
     for (int i = 0; i < neighbours.size(); i++)
     {
         neighbours[i]->Print();
+    }
+}
+
+template <typename Typename>
+void Graph<Typename>::PrintAdjacencyMatrix()
+{
+    int size = neighbours.size();
+    cout << "Printing graph as adjacency matrix:" << endl;
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            cout << int(adjacencyMatrix[i][j]) << " ";
+        }
+        cout << endl;
     }
 }
 
@@ -218,11 +246,12 @@ int main()
     exampleList.Print();
 
     Graph<int> exampleGraph;
-    exampleGraph.AddVertex(true);
-    exampleGraph.AddVertex(true);
-    exampleGraph.AddVertex(true);
+    exampleGraph.AddVertex(100);
+    exampleGraph.AddVertex(200);
+    exampleGraph.AddVertex(300);
     exampleGraph.AddEdge(0,1);
     exampleGraph.AddEdge(0,2);
     exampleGraph.PrintAdjacencyStruct();
+    exampleGraph.PrintAdjacencyMatrix();
     exampleGraph.CheckConnectivity();
 }
