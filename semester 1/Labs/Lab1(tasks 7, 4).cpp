@@ -55,7 +55,7 @@ public:
     ~Graph();
     void AddVertex(Typename vertex);
     void AddEdge(int vertexNumber1, int vertexNumber2);
-    void Print();
+    void PrintAdjacencyStruct();
     void CheckConnectivity();
 
 private:
