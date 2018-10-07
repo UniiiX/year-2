@@ -149,6 +149,11 @@ void Graph<Typename>::AddVertex(Typename vertex)
 template <typename Typename>
 void Graph<Typename>::AddEdge(int vertexNumber1, int vertexNumber2)
 {
+    if (vertexNumber1 == vertexNumber2)
+    {
+        cout << "Can not add an edge(an edge can be added only in between two different vertices)" << endl;
+        return;
+    }
     if (vertexNumber1 > neighbours.size() - 1 || vertexNumber1 < 0)
     {
         cout << "Can not add an edge to vertex with number " <<  vertexNumber1 << "(there is no such vertex in the graph)" << endl;
