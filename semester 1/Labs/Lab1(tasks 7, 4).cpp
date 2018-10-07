@@ -223,6 +223,6 @@ int main()
     exampleGraph.AddVertex(true);
     exampleGraph.AddEdge(0,1);
     exampleGraph.AddEdge(0,2);
-    exampleGraph.Print();
+    exampleGraph.PrintAdjacencyStruct();
     exampleGraph.CheckConnectivity();
 }
