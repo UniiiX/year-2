@@ -58,6 +58,7 @@ public:
     void PrintAdjacencyStruct();
     void PrintAdjacencyMatrix();
     void CheckConnectivity();
+    int CountDistance(int vertexNumber1, int vertexNumber2);
 
 private:
     vector<Typename> vertex;
@@ -137,13 +138,19 @@ template <typename Typename>
 void Graph<Typename>::AddVertex(Typename vertex)
 {
     this->vertex.push_back(vertex); // adding vertex
+    int newSize = this->vertex.size();
 
     List<int>* listToPush = new List<int>(); // creating list of neighbours for the new vertex
-    listToPush->Append(this->vertex.size() - 1); // This means that numeration of vertices in graph starts from 0
+    listToPush->Append(newSize - 1); // This means that numeration of vertices in graph starts from 0
     neighbours.push_back(listToPush); // adding the list to the adjacency vector
 
-    vector<bool> vectorToPush; // creating boolean vector to push it back to the adjacency matrix
+    vector<bool> vectorToPush(newSize); // creating boolean vector to push it back to the adjacency matrix
     adjacencyMatrix.push_back(vectorToPush); // pushing it back
+    for (int i = 0; i < newSize; i++) // initializing new row and column with false
+    {
+        adjacencyMatrix[i][newSize - 1] = false;
+        adjacencyMatrix[newSize - 1][i] = false;
+    }
 }
 
 template <typename Typename>
@@ -200,7 +207,7 @@ void Graph<Typename>::PrintAdjacencyMatrix()
 template <typename Typename>
 void Graph<Typename>::CheckConnectivity()
 {
-    int initialVertexNumber = 0;
+    int currentVertexNumber = 0;
     int size = vertex.size();
     queue<int> q;
     bool* visited = new bool[size];
@@ -209,13 +216,13 @@ void Graph<Typename>::CheckConnectivity()
         visited[i] = false;
     }
 
-    q.push(initialVertexNumber);
-    visited[initialVertexNumber] = true;
+    q.push(currentVertexNumber);
+    visited[currentVertexNumber] = true;
     while (!q.empty())
     {
-        initialVertexNumber = q.front();
+        currentVertexNumber = q.front();
         q.pop();
-        Node<int>* current = neighbours[initialVertexNumber]->head;
+        Node<int>* current = neighbours[currentVertexNumber]->head;
         while (current)
         {
             if (!visited[current->data])
@@ -240,6 +247,12 @@ void Graph<Typename>::CheckConnectivity()
     delete[] visited;
 }
 
+
+template <typename Typename>
+int Graph<Typename>::CountDistance(int vertexNumber1, int vertexNumber2)
+{
+
+}
 ///-----------------------------------------------------------------------------------------------------------
 
 int main()
