@@ -156,7 +156,7 @@ void Graph<Typename>::AddEdge(int vertexNumber1, int vertexNumber2)
 }
 
 template <typename Typename>
-void Graph<Typename>::Print()
+void Graph<Typename>::PrintAdjacencyStruct()
 {
     for (int i = 0; i < neighbours.size(); i++)
     {
