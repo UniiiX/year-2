@@ -207,10 +207,10 @@ void Graph<Typename>::PrintAdjacencyMatrix()
 template <typename Typename>
 void Graph<Typename>::CheckConnectivity()
 {
-    int currentVertexNumber = 0;
+    int currentVertexNumber = 0; // this is the initial vertex for width-first search
     int size = vertex.size();
     queue<int> q;
-    bool* visited = new bool[size];
+    bool* visited = new bool[size]; // array that indicates whether the vertex has already been visited or not
     for (int i = 0; i < size; i++)
     {
         visited[i] = false;
@@ -227,16 +227,16 @@ void Graph<Typename>::CheckConnectivity()
         {
             if (!visited[current->data])
             {
-                visited[current->data] = true;
+                visited[current->data] = true; // marking neighbour as visited and adding the vertex to the queue
                 q.push(current->data);
             }
-            current = current->next;
+            current = current->next; // moving to the next neighbour
         }
     }
 
     for (int i = 0; i < size; i++)
     {
-        if (!visited[i])
+        if (!visited[i]) // if at least one vertex was unvisited then graph is not connected
         {
             cout << "Graph is not connected" << endl;
             delete[] visited;
@@ -251,8 +251,66 @@ void Graph<Typename>::CheckConnectivity()
 template <typename Typename>
 int Graph<Typename>::CountDistance(int vertexNumber1, int vertexNumber2)
 {
+    if (vertexNumber1 == vertexNumber2)
+    {
+        cout << "Distance can only be counted between different vertices" << endl;
+        return 0;
+    }
+    if (vertexNumber1 > neighbours.size() - 1 || vertexNumber1 < 0)
+    {
+        cout << "Can not count distance to vertex with number " <<  vertexNumber1 << "(there is no such vertex in the graph)" << endl;
+        return -1;
+    }
+    if (vertexNumber2 > neighbours.size() - 1 || vertexNumber2 < 0)
+    {
+        cout << "Can not count distance to vertex with number " <<  vertexNumber2 << "(there is no such vertex in the graph)" << endl;
+        return -1;
+    }
 
+    int currentVertexNumber = vertexNumber1;
+    int size = vertex.size();
+    queue<int> q;
+    int result; // we need this variable in order to free the memory off of distance array
+    int* distance = new int[size]; // array that contains information about distance from initial vertex to current
+    bool* visited = new bool[size]; // array that indicates whether the vertex has already been visited or not
+    for (int i = 0; i < size; i++) // initializing arrays
+    {
+        distance[i] = 0;
+        visited[i] = false;
+    }
+
+    q.push(currentVertexNumber);
+    visited[currentVertexNumber] = true;
+    while (!q.empty())
+    {
+        currentVertexNumber = q.front();
+        if (currentVertexNumber == vertexNumber2) // if we have found second vertex we can exit the width-first search here
+        {
+            result = distance[currentVertexNumber]; // after this we can free the memory up
+            delete[] visited; // freeing the memory up
+            delete[] distance;
+            return result;
+        }
+        q.pop();
+        Node<int>* current = neighbours[currentVertexNumber]->head;
+        while (current)
+        {
+            if (!visited[current->data])
+            {
+                visited[current->data] = true; // marking neighbour as visited and adding the vertex to the queue
+                q.push(current->data);
+                distance[current->data] = distance[currentVertexNumber] + 1; // distance to each unvisited neighbour is greater than distance to current vertex by 1
+            }
+            current = current->next; // moving to the next neighbour
+        }
+    }
+    // if we haven't exited the function yet this means that given vertices belong to different connected components
+    cout << "Can not count distance(graph is not connected)" << endl;
+    delete[] visited;
+    delete[] distance;
+    return -1;
 }
+
 ///-----------------------------------------------------------------------------------------------------------
 
 int main()
@@ -267,9 +325,15 @@ int main()
     exampleGraph.AddVertex(100);
     exampleGraph.AddVertex(200);
     exampleGraph.AddVertex(300);
+    exampleGraph.AddVertex(1100);
+    exampleGraph.AddVertex(77);
     exampleGraph.AddEdge(0,1);
     exampleGraph.AddEdge(0,2);
+    exampleGraph.AddEdge(2,1);
+    exampleGraph.AddEdge(3,1);
+    exampleGraph.AddEdge(4,3);
     exampleGraph.PrintAdjacencyStruct();
     exampleGraph.PrintAdjacencyMatrix();
     exampleGraph.CheckConnectivity();
+    cout << exampleGraph.CountDistance(4,2) << endl;
 }
