@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <cstdlib>
 #include <iterator>
 
 using namespace std;
@@ -21,6 +22,12 @@ class Node
     {
         friend List<Typename>;
         friend Graph<Typename>;
+    public:
+        Typename GetData()
+        {
+            return data;
+        }
+
     private:
         Typename data;
         Node* next;
@@ -28,6 +35,12 @@ class Node
         Node (Typename data = Typename(), Node* next = NULL)
         {
             this->data = data;
+            this->next = next;
+        }
+
+        Node (Typename (*randomizationFunction)(), Node* next = NULL)
+        {
+            data = randomizationFunction();
             this->next = next;
         }
     };
@@ -53,6 +66,7 @@ class Graph
 {
 public:
     ~Graph();
+    Typename GetVertex(int vertexNumber);
     void AddVertex(Typename vertex);
     void AddEdge(int vertexNumber1, int vertexNumber2);
     void PrintAdjacencyStruct();
@@ -132,6 +146,17 @@ Graph<Typename>::~Graph()
     adjacencyMatrix.clear();
     neighbours.clear();
     vertex.clear();
+}
+
+template <typename Typename>
+Typename Graph<Typename>::GetVertex(int vertexNumber)
+{
+    if (vertexNumber > neighbours.size() - 1 || vertexNumber < 0)
+    {
+        cout << "Can not access vertex with number " <<  vertexNumber << "(there is no such vertex in the graph)" << endl;
+        return Typename();
+    }
+    return vertex[vertexNumber];
 }
 
 template <typename Typename>
@@ -322,11 +347,12 @@ int main()
     exampleList.Print();
 
     Graph<int> exampleGraph;
-    exampleGraph.AddVertex(100);
-    exampleGraph.AddVertex(200);
-    exampleGraph.AddVertex(300);
-    exampleGraph.AddVertex(1100);
-    exampleGraph.AddVertex(77);
+    exampleGraph.AddVertex(rand());
+    cout << "First vertex in graph is: " << exampleGraph.GetVertex(0) << endl;
+    exampleGraph.AddVertex(rand());
+    exampleGraph.AddVertex(rand());
+    exampleGraph.AddVertex(rand());
+    exampleGraph.AddVertex(rand());
     exampleGraph.AddEdge(0,1);
     exampleGraph.AddEdge(0,2);
     exampleGraph.AddEdge(2,1);
