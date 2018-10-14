@@ -2,7 +2,7 @@
 #include <vector>
 #include <queue>
 #include <cstdlib>
-#include <iterator>
+#include <ctime>
 
 using namespace std;
 
@@ -14,6 +14,10 @@ class List;
 
 template <typename Typename>
 class Node;
+
+class Dice;
+
+class SetOfDices;
 
 ///-----------------------------------------------------------------------------------------------------------
 
@@ -78,6 +82,36 @@ private:
     vector<Typename> vertex;
     vector<List<int>* > neighbours;
     vector<vector<bool> > adjacencyMatrix; // storing a graph simultaneously as adjacency structure and adjacency matrix
+};
+
+class SetOfDices
+{
+public:
+    ~SetOfDices();
+    void AddDice(Dice dice);
+    void Print();
+
+private:
+    vector<Dice> dices;
+    vector<double> probability; // probabilities of all possible sums
+    void CorrectProbabilityOfSum(Dice dice);
+};
+
+class Dice
+{
+    friend class SetOfDices;
+public:
+    Dice(int sides, vector<double> &probability);
+    Dice(int sides);
+    ~Dice();
+    void Print();
+
+private:
+    int sides;
+    int possibleSidesValues[7] = {2, 4, 6, 8, 10, 12, 20};
+    vector<double> probability;
+    void CorrectSidesValue(int sides);
+    void CorrectProbabilityValues(vector<double> &probability);
 };
 
 ///----------------------------------------class List methods-------------------------------------------------
@@ -336,30 +370,196 @@ int Graph<Typename>::CountDistance(int vertexNumber1, int vertexNumber2)
     return -1;
 }
 
+///----------------------------------------class Dice methods-------------------------------------------------
+
+Dice::Dice(int sides, vector<double> &probability)
+{
+    CorrectSidesValue(sides);
+    CorrectProbabilityValues(probability);
+}
+
+Dice::Dice(int sides)
+{
+    CorrectSidesValue(sides);
+    vector<double> probability;
+    for (int i = 0; i < this->sides; i++)
+    {
+        probability.push_back(rand());
+    }
+    CorrectProbabilityValues(probability);
+    probability.clear();
+}
+
+Dice::~Dice()
+{
+    probability.clear();
+}
+
+void Dice::CorrectSidesValue(int sides)
+{
+    if (possibleSidesValues[0] > sides)
+    {
+        this->sides = possibleSidesValues[0];
+        return;
+    }
+
+    for (int i = 1; i < 7; i++)
+    {
+        if (possibleSidesValues[i] > sides)
+        {
+            this->sides = possibleSidesValues[i-1];
+            return;
+        }
+    }
+
+    this->sides = possibleSidesValues[6];
+}
+
+void Dice::CorrectProbabilityValues(vector<double> &probability)
+{
+    double sum =  0;
+
+    for (int i = 0; i < this->sides; i++)
+    {
+        sum += probability[i];
+    }
+
+    for (int i = 0; i < this->sides; i++)
+    {
+        this->probability.push_back(probability[i] / sum);
+    }
+}
+
+void Dice::Print()
+{
+    cout << "Printing dice(side : probability): " << endl;
+    for (int i = 0; i < sides; i++)
+    {
+        cout << i + 1 << " : " << probability[i] << endl;
+    }
+}
+
+///----------------------------------------class SetOfDices methods-------------------------------------------
+
+SetOfDices::~SetOfDices()
+{
+    this->dices.clear();
+    this->probability.clear();
+}
+
+void SetOfDices::AddDice(Dice dice)
+{
+    this->dices.push_back(dice);
+    CorrectProbabilityOfSum(dice);
+}
+
+void SetOfDices::CorrectProbabilityOfSum(Dice dice)
+{
+    if (this->probability.size() == 0)
+    {
+        this->probability.push_back(0); // probability of sum which is equal 0 is 0
+        for (int i = 0; i < dice.sides; i++)
+        {
+            this->probability.push_back(dice.probability[i]); // if there is only one dice in the set then the probability of the sum equals the probability of side
+        }
+    }
+    else
+    {
+        vector<double> currentProbability(this->probability); // creating auxiliary vector to store current probabilities
+        for (int i = 0; i < this->probability.size(); i++)
+        {
+            this->probability[i] = 0; // now that we have copied this vector we can set the values to zero
+        }
+        int minSum = 0;
+        int maxSum = currentProbability.size(); // current maximal sum equals the size of current probabilities vector
+        while (currentProbability[minSum] == 0)
+        {
+            minSum++; // counting current minimal sum
+        }
+        maxSum += dice.sides; // new maximal sum
+        this->probability.resize(maxSum, 0); // resizing to the size of new maximal sum
+
+        for (int i = minSum; i < currentProbability.size(); i++)
+        {
+            for (int j = 0; j < dice.sides; j++)
+            {
+                this->probability[i + j + 1] += currentProbability[i] * dice.probability[j]; // counting new probabilities
+            }
+        }
+        currentProbability.clear(); // clearing auxiliary vector
+    }
+
+}
+
+void SetOfDices::Print()
+{
+    cout << "Printing set of dices:" << endl;
+    for (int i = 0; i < this->dices.size(); i++)
+    {
+        this->dices[i].Print();
+    }
+    cout << "Printing all possible sums and the probability of each sum(sum : probability)" << endl;
+    for (int i = 0; i < this->probability.size(); i++)
+    {
+        if (this->probability[i] != 0)
+        {
+            cout << i << " : " << this->probability[i] << endl;
+        }
+    }
+}
+
 ///-----------------------------------------------------------------------------------------------------------
+
+void DemonstrationOfGraph()
+{
+    Graph<int> sampleGraph;
+    sampleGraph.AddVertex(rand());
+
+    int vertexNumber1 = 0;
+    cout << "Vertex #" << vertexNumber1 << " in graph is: " << sampleGraph.GetVertex(vertexNumber1) << endl;
+
+    sampleGraph.AddVertex(rand());
+    sampleGraph.AddVertex(rand());
+    sampleGraph.AddVertex(rand());
+    sampleGraph.AddVertex(rand());
+    sampleGraph.AddEdge(0,1);
+    sampleGraph.AddEdge(0,2);
+    sampleGraph.AddEdge(2,1);
+    sampleGraph.AddEdge(3,1);
+    sampleGraph.AddEdge(4,3);
+    sampleGraph.PrintAdjacencyStruct();
+    sampleGraph.PrintAdjacencyMatrix();
+    sampleGraph.CheckConnectivity();
+    vertexNumber1 = 4;
+    int vertexNumber2 = 2;
+    cout << "Distance between vertices #" << vertexNumber1 << " and #" << vertexNumber2 << " is: " << sampleGraph.CountDistance(vertexNumber1, vertexNumber2) << endl;
+}
+
+void DemonstrationOfDices()
+{
+    int dicesCount;
+    SetOfDices dices;
+    cout << "Enter count of dices: " << endl;
+    cin >> dicesCount;
+    for (int i = 0; i < dicesCount; i++)
+    {
+        int sides;
+        cout << "Enter sides count of dice #" << i + 1 << ":(probabilities will be generated randomly) " << endl;
+        cin >> sides;
+        Dice dice(sides);
+        dices.AddDice(dice);
+    }
+    dices.Print();
+}
+
+void DemonstrationFunction()
+{
+    DemonstrationOfGraph();
+    DemonstrationOfDices();
+}
 
 int main()
 {
-    List<int> exampleList;
-    exampleList.Append(5);
-    exampleList.Append(6);
-    exampleList.Append(7);
-    exampleList.Print();
-
-    Graph<int> exampleGraph;
-    exampleGraph.AddVertex(rand());
-    cout << "First vertex in graph is: " << exampleGraph.GetVertex(0) << endl;
-    exampleGraph.AddVertex(rand());
-    exampleGraph.AddVertex(rand());
-    exampleGraph.AddVertex(rand());
-    exampleGraph.AddVertex(rand());
-    exampleGraph.AddEdge(0,1);
-    exampleGraph.AddEdge(0,2);
-    exampleGraph.AddEdge(2,1);
-    exampleGraph.AddEdge(3,1);
-    exampleGraph.AddEdge(4,3);
-    exampleGraph.PrintAdjacencyStruct();
-    exampleGraph.PrintAdjacencyMatrix();
-    exampleGraph.CheckConnectivity();
-    cout << exampleGraph.CountDistance(4,2) << endl;
+    srand(time(NULL));
+    DemonstrationFunction();
 }
