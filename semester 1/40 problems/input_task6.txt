@@ -1,3 +1,0 @@
-10 10 12 3 4
-
-faces - tails - neededFaces - step - number of steps
