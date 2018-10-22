@@ -1,6 +1,6 @@
-/* Èìååòñÿ N ÷åëîâåê è ïðÿìîóãîëüíàÿ òàáëèöà À[1:N,1:N];ýëåìåíò A[i,j] ðàâåí 1,
-åñëè ÷åëîâåê i çíàêîì ñ ÷åëîâåêîì j, À[i,j] == À[j,i]. Ìîæíî ëè ðàçáèòü ëþäåé íà 2
-ãðóïïû, ÷òîáû â êàæäîé ãðóïïå áûëè òîëüêî íåçíàêîìûå ëþäè. */
+/* Имеется N человек и прямоугольная таблица А[1:N,1:N];элемент A[i,j] равен 1,
+если человек i знаком с человеком j, А[i,j] == А[j,i]. Можно ли разбить людей на 2
+группы, чтобы в каждой группе были только незнакомые люди. */
 
 #include <iostream>
 #include <vector>
@@ -19,7 +19,7 @@ public:
 
 private:
     vector<vector<int> > adjacencyMatrix;
-    void PaintVertex(int vertexNumber, int* colors, int size);
+    void PaintVertex(int vertexNumber, int* colors, queue<int> q);
 };
 
 Graph::~Graph()
@@ -51,6 +51,7 @@ void Graph::ReadFromFile(char* filename)
 void Graph::PaintGraph()
 {
     queue<int> q;
+    int vertexNumber;
     int size = adjacencyMatrix.size();
     int* colors = new int[size];
     for (int i = 0; i < size; i++)
@@ -60,12 +61,23 @@ void Graph::PaintGraph()
 
     for (int i = 0; i < size; i++)
     {
-        PaintVertex(i, colors, size);
-        if (colors[i] == -2)
+        // doing width-first search for each vertex
+        if (colors[i] == -1)
         {
-            cout << "Can't paint graph" << endl;
-            delete[] colors;
-            return;
+            q.push(i);
+            colors[i] = 0;
+            while (!q.empty())
+            {
+                vertexNumber = q.front();
+                q.pop();
+                PaintVertex(vertexNumber, colors, q); // painting vertex depending on the color of neighbours
+                if (colors[vertexNumber] == -2)
+                {
+                    cout << "Can't paint graph" << endl;
+                    delete[] colors;
+                    return; // exiting the function if graph can not be painted
+                }
+            }
         }
     }
     cout << "Painted graph is: " << endl;
@@ -76,31 +88,37 @@ void Graph::PaintGraph()
     delete[] colors;
 }
 
-void Graph::PaintVertex(int vertexNumber, int* colors, int size)
+void Graph::PaintVertex(int vertexNumber, int* colors, queue<int> q)
 {
+    int size = adjacencyMatrix.size();
     int neighboursColor = -1;
     for (int i = 0; i < size; i++)
     {
-        if (adjacencyMatrix[vertexNumber][i] == 1 && colors[i] >= 0)
+        if (adjacencyMatrix[vertexNumber][i] == 1)
         {
-            if (neighboursColor == -1)
+            if (colors[i] == -1)
             {
-                colors[vertexNumber] = 1 - colors[i];
-                neighboursColor = colors[i];
-                continue;
+                q.push(i); // if neighbour was not painted pushing it to the queue
             }
-            if (neighboursColor != colors[i])
+            if (colors[i] >= 0)
             {
-                colors[vertexNumber] = -2; // vertex can not be painted
-                cout << "result = -2; i = " << i << endl;
-                return;
+                if (neighboursColor == -1)
+                {
+                    colors[vertexNumber] = 1 - colors[i]; // painting vertex with opposite color to the color of neighbours
+                    neighboursColor = colors[i];
+                    continue;
+                }
+                if (neighboursColor != colors[i])
+                {
+                    colors[vertexNumber] = -2; // vertex can not be painted because different neighbours have different colors
+                    return;
+                }
             }
         }
-
     }
     if (neighboursColor == -1)
     {
-        colors[vertexNumber] = 1;
+        colors[vertexNumber] = 0; // painting with 0 if all neighbours haven't been painted yet
     }
 }
 
