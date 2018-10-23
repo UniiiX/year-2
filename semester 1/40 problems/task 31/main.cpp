@@ -14,9 +14,9 @@ int main()
 	double angle;
 	double precision;
 	cout << "Input precision: ";
-    cin >> precision;
-    cout << "Input angle: ";
-    cin >> angle;
+	cin >> precision;
+	cout << "Input angle: ";
+	cin >> angle;
 	cout << "Cos(" << angle << ") = " << Cos(angle, precision) << endl;
 	cout << "Checking with cmath: cos = " << cos(angle) << endl;
 }
