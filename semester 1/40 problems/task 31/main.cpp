@@ -6,8 +6,6 @@ using namespace std;
 
 const double PI = 3.1415926535897932;
 
-
-int factorial(int x);
 double preciseCos(double angle, double precision);
 double Cos(double angle, double precision);
 
@@ -22,18 +20,6 @@ int main()
     cin >> angle;
 	cout << "Cos(" << angle << ") = " << Cos(angle, precision) << endl;
 	cout << "Checking with cmath: cos = " << cos(angle) << endl;
-}
-
-int factorial(int x)
-{
-	if (x == 0)
-    {
-        return 1;
-    }
-	if (x > 0)
-    {
-        return x * factorial(x - 1);
-    }
 }
 
 double preciseCos(double angle, double precision)
