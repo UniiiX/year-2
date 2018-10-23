@@ -43,7 +43,7 @@ double Cos(double angle, double precision)
     int sign = 1;
     if (PI / 2 < angle && angle < 3 * PI / 2)
     {
-        // converting angle to positive one with positive cos
+        // converting angle to one with positive cos
         sign = -sign;
         angle = abs(PI - angle);
     }
