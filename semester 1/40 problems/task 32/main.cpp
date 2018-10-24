@@ -21,16 +21,19 @@ int* CountLetters(string str)
     for (int i = 0; i < str.size(); i++)
     {
         int index = str.at(i) - 'a';
-        if (0 <= index || index < 26)
-        {
-            result[index]++;
-            continue;
-        }
-        index = str.at(i) - 'A';
-        if (0 <= index || index < 26)
+        if (0 <= index && index < 26)
         {
             result[index]++;
         }
+        else
+        {
+            index = str.at(i) - 'A';
+            if (0 <= index && index < 26)
+            {
+                result[index + 26]++;
+            }
+        }
+
     }
     return result;
 }
@@ -44,14 +47,21 @@ int main()
     int* countOfLettersInFirstString = CountLetters(firstString);
     int* countOfLettersInSecondString = CountLetters(secondString);
     int* countOfLettersInMaxSubstring = new int[lettersCount];
+
     cout << "Maximal Substring is: ";
     for (int i = 0; i < lettersCount; i++)
     {
         countOfLettersInMaxSubstring[i] = min(countOfLettersInFirstString[i], countOfLettersInSecondString[i]);
         for (int j = 0; j < countOfLettersInMaxSubstring[i]; j++)
         {
-            cout << char('a' + i);
+            if (i < 26)
+            {
+                cout << char('a' + i);
+            }
+            else
+            {
+                cout << char('A' + i - 26);
+            }
         }
     }
-    return 0;
 }
