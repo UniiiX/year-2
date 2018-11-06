@@ -1,3 +1,9 @@
+/* Дана прямоугольная таблица, состоящая из m строк и n столбцов. На
+пересечении i-й строки и j-го столбца записано целое число aij. Требуется найти
+такие четыре различные ячейки таблицы, чтобы их центры были вершинами
+прямоугольника со сторонами, параллельными сторонам таблицы, а сумма чисел,
+записанных в этих ячейках, была максимальна. */
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -8,18 +14,18 @@ int** InputMatrixFromFile(int &rows, int &columns)
 {
     ifstream fin;
     fin.open("input_task13.txt");
-    fin >> columns;
     fin >> rows;
+    fin >> columns;
 
-    int ** matrix = new int*[rows];
+    int ** matrix = new int*[columns];
     for (int i = 0; i < rows; i++)
     {
-        matrix[i] = new int[columns];
+        matrix[i] = new int[rows];
     }
 
-    for (int j = 0; j < columns; j++)
+    for (int i = 0; i < rows; i++)
     {
-        for (int i = 0; i < rows; i++)
+        for (int j = 0; j < columns; j++)
         {
             fin >> matrix[i][j];
         }
