@@ -1,10 +1,10 @@
-/*Ñîçäàòü îäíîñâÿçíûé ëèíåéíûé ñïèñîê (ó êàæäîãî óçëà 1 èíôîðì. ïîëå òèïà
-Integer), ñ âîçìîæíîñòüþ äîáàâëÿòü è óäàëÿòü óçëû.
-Ïîñëå çàâåðøåíèÿ ðåäàêòèðîâàíèÿ ñïèñêà çàïðîñèòü ÷èñëî N è ðàçáèòü ñïèñîê íà
-äâà äðóãèõ, íå ìåíÿÿ ðàñïîëîæåíèÿ ýëåìåíòîâ â ïàìÿòè, ñëåäóþùèì îáðàçîì:
-åñëè çíà÷åíèå èíôîðì. ïîëÿ óçëà > N, âêëþ÷èòü åãî â 1 ñïèñîê, èíà÷å âêëþ÷èòü
-åãî âî 2 ñïèñîê.
-Ïîñëå çàâåðøåíèÿ ðàáîòû âñå ñïèñêè ðàçðóøèòü.*/
+/*Создать односвязный линейный список (у каждого узла 1 информ. поле типа
+Integer), с возможностью добавлять и удалять узлы.
+После завершения редактирования списка запросить число N и разбить список на
+два других, не меняя расположения элементов в памяти, следующим образом:
+если значение информ. поля узла > N, включить его в 1 список, иначе включить
+его во 2 список.
+После завершения работы все списки разрушить.*/
 
 #include <iostream>
 #include <ctime>
@@ -40,9 +40,8 @@ List* CreateEmptyList()
     return result;
 }
 
-void AddNode(List* list, int data)
+void AddNode(List* list, Node* nodeToAdd)
 {
-    Node* nodeToAdd = CreateNode(data);
     if (list->Begin == NULL)
     {
         list->Begin = nodeToAdd;
@@ -56,11 +55,17 @@ void AddNode(List* list, int data)
     nodeToAdd->next = NULL;
 }
 
+void AddData(List* list, int data)
+{
+    Node* nodeToAdd = CreateNode(data);
+    AddNode(list, nodeToAdd);
+}
+
 void ShowList(List* list)
 {
     cout << "[";
     Node* current = list->Begin;
-    while (current)
+    while (current != NULL)
     {
         cout << current->data;
         if (current->next)
@@ -77,9 +82,33 @@ List* CreateRandomList()
     List* result = CreateEmptyList();
     for (int i = 0; i < 10; i++)
     {
-        AddNode(result, rand() % 100);
+        AddData(result, rand() % 100);
     }
     return result;
+}
+
+void DeleteNode(List* list, Node* toDelete)
+{
+    Node* current = list->Begin;
+    if (list->Begin == toDelete)
+    {
+        list->Begin = list->Begin->next;
+    }
+    while (current->next != toDelete)
+    {
+        current = current->next;
+    }
+
+    if (toDelete->next)
+    {
+        current->next = toDelete->next;
+    }
+    else
+    {
+        list->End = current;
+        current->next = NULL;
+    }
+    delete toDelete;
 }
 
 void DeleteList(List* listToDelete)
@@ -95,7 +124,7 @@ void DeleteList(List* listToDelete)
     delete listToDelete;
 }
 
-void DivideListOn2Sublists(List* someList)
+void DivideListInto2Sublists(List* someList)
 {
     int divider;
     cout << "Enter N: ";
@@ -105,15 +134,16 @@ void DivideListOn2Sublists(List* someList)
     List* sublist2 = CreateEmptyList();
     while (current)
     {
+        Node* next = current->next;
         if (current->data < divider)
         {
-            AddNode(sublist1, current->data);
+            AddNode(sublist1, current);
         }
         else
         {
-            AddNode(sublist2, current->data);
+            AddNode(sublist2, current);
         }
-        current = current->next;
+        current = next;
     }
     cout << "First sublist:";
     ShowList(sublist1);
@@ -125,11 +155,22 @@ void DivideListOn2Sublists(List* someList)
 
 void SolveTask()
 {
+
     List* randomList = CreateRandomList();
-    cout << "Randomly generated list is: ";
+    cout << "Randomly generated list is: " << endl;
     ShowList(randomList);
-    DivideListOn2Sublists(randomList);
-    delete randomList;
+
+    cout << "Adding number 100 to the end of the list: " << endl;
+    AddData(randomList, 100);
+    ShowList(randomList);
+
+    cout << "Removing last element: " << endl;
+    DeleteNode(randomList, randomList->End);
+    ShowList(randomList);
+
+    cout << "Dividing list into 2 sublists: " << endl;
+    DivideListInto2Sublists(randomList);
+    DeleteList(randomList);
 }
 
 int main()
