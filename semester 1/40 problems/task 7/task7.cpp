@@ -1,6 +1,6 @@
-/*Ðåàëèçîâàòü ðàáîòó äèíàìè÷åñêîé ñòðóêòóðû: Î×ÅÐÅÄÜ
-Äîáàâëåíèå ýëåìåíòà·Óäàëåíèå·Ñîðòèðîâêà: Â ðàáîòå èñïîëüçîâàòü äâà ìåòîäà
-ñîðòèðîâêè: áûñòðóþ è âñòàâêàìè. Ñðàâíèòü ýôôåêòèâíîñòü.*/
+/*Реализовать работу динамической структуры: ОЧЕРЕДЬ
+Добавление элемента·Удаление·Сортировка: В работе использовать два метода
+сортировки: быструю и вставками. Сравнить эффективность.*/
 
 #include <iostream>
 #include <ctime>
@@ -159,31 +159,57 @@ void QuickSort(Queue* queueToSort, int low, int high)
 
 }
 
-Queue* CreateRandomQueue()
+Queue* CreateRandomQueue(int size)
 {
     Queue* result = CreateEmpty();
-    for (int i = 0; i < 11; i++)
+    for (int i = 0; i < size; i++)
     {
-        Push(result, rand() % 100);
+        Push(result, rand() % 200 - 100);
     }
     return result;
 }
 
+void CompareEfficiency()
+{
+    Queue* veryLongQueue = CreateRandomQueue(10000);
+    clock_t startTime = clock();
+    InsertionSort(veryLongQueue);
+    clock_t endTime = clock();
+    double deltaTime = double(endTime - startTime) / CLOCKS_PER_SEC;
+    cout << "Time of InsertionSort: " << deltaTime << endl;
+
+
+    veryLongQueue = CreateRandomQueue(10000);
+    startTime = clock();
+    QuickSort(veryLongQueue, 0, veryLongQueue->Size - 1);
+    endTime = clock();
+    deltaTime = double(endTime - startTime) / CLOCKS_PER_SEC;
+    cout << "Time of QuickSort: " << deltaTime << endl;
+}
+
 void TestFunction()
 {
-    Queue* randomQueue = CreateRandomQueue();
+    cout << "Randomly generated queue is: " << endl;;
+    Queue* randomQueue = CreateRandomQueue(10);
     ShowQueue(randomQueue);
-    for (int i = 0; i < 4; i++)
-    {
-        Remove(randomQueue);
-        ShowQueue(randomQueue);
-    }
+
+    cout << "Removing last element: " << endl;
+    Remove(randomQueue);
+    ShowQueue(randomQueue);
+
+    cout << "Sorting elements in queue with Insertion Sort: " << endl;
     InsertionSort(randomQueue);
     ShowQueue(randomQueue);
-    randomQueue = CreateRandomQueue();
+
+    cout << "Randomly generated queue is: " << endl;
+    randomQueue = CreateRandomQueue(10);
     ShowQueue(randomQueue);
+
+    cout << "Sorting elements in queue with QuickSort: " << endl;
     QuickSort(randomQueue, 0, randomQueue->Size - 1);
     ShowQueue(randomQueue);
+
+    CompareEfficiency();
 }
 
 int main()
