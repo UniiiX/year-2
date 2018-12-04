@@ -146,7 +146,7 @@ int main()
 	heap1.printVector();
 
 	int increment = rand() % 40;
-	cout << "Inserting key " << key  << " by " << increment << endl;
+	cout << "Increasing key " << key  << " by " << increment << endl;
 	heap1.increaseKey(key, increment);
 	heap1.printVector();
 
