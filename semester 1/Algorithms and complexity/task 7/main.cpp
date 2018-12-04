@@ -80,7 +80,7 @@ void RabinKarpSearch2D(string* text, string* pattern)
         }
     }
 
-    // keys - values of hash function to search in the text
+    // keys - values of hash function to search in the text for
     vector<long long> keys(patternLength);
     for (int i = 0; i < patternLength; ++i)
     {
@@ -113,14 +113,6 @@ void RabinKarpSearch2D(string* text, string* pattern)
                     positionsOfPattern[i][k] = j + 1; // saving found position
                 }
             }
-        }
-    }
-
-    for (int i = 0; i < textLength; ++i)
-    {
-        for (int k = 0; k < patternLength; ++k)
-        {
-            cout << "Position[" << i << "][" << k << "] = " << positionsOfPattern[i][k] << endl;
         }
     }
 
