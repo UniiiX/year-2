@@ -1,204 +1,156 @@
 #include <iostream>
 #include <vector>
+#include <ctime>
+#include <cstdlib>
 
 using namespace std;
 
-int RabinKarpSearch (string text, string pattern)
+class Heap
 {
-    const int textLength = text.size();
-    const int patternLength = pattern.size();
-    const int radix = 31;
-    vector<long long> radixPowers(max (patternLength, textLength));
-    radixPowers[0] = 1;
-    for (int i = 1; i < radixPowers.size(); ++i)
+private:
+    const int dimension = 5;
+	int heapSize;
+	vector<int> heapVector;
+	void maxHeapify(int parent);
+	int getMax(int parent);
+	void swap(int* a, int* b)
     {
-        radixPowers[i] = radixPowers[i - 1] * radix;
-    }
+		int c = *a;
+		*a = *b;
+		*b = c;
+	}
 
-    vector<long long> hashFunction (textLength);
-    for (int i = 0; i < textLength; ++i)
+public:
+	Heap(vector<int> newVector)
     {
-        hashFunction[i] = (text[i] - 'a' + 1) * radixPowers[i];
-        if (i != 0)
+		heapVector = newVector;
+		heapSize = newVector.size();
+		for (int i(heapSize / dimension - 1); i >= 0; i--)
         {
-            hashFunction[i] += hashFunction[i - 1];
+			maxHeapify(i);
+		}
+	}
+	int extractMax();
+	void insert(int data);
+	void increaseKey(int key, int increment);
+	void heapSort();
+	void printVector();
+};
+
+int Heap::getMax(int parent)
+{
+    int result = parent;
+	vector<int> children(dimension);
+	for (int i(0); i < dimension; i++)
+    {
+        children[i] = dimension * parent + (i + 1);
+        if (children[i] < heapSize && heapVector[children[i]] > heapVector[result])
+        {
+            result = children[i];
         }
     }
-
-    long long key = 0;
-    for (int i = 0; i < patternLength; ++i)
-    {
-        key += (pattern[i] - 'a' + 1) * radixPowers[i];
-    }
-
-    for (int i = 0; i + patternLength - 1 < textLength; ++i)
-    {
-        long long currrentValue = hashFunction[i + patternLength - 1];
-        if (i != 0)
-        {
-            currrentValue -= hashFunction[i - 1];
-        }
-
-        if (currrentValue == key * radixPowers[i])
-        {
-            cout << "Pattern was found in the text. Position: " << i + 1 << endl;
-            return i + 1;
-        }
-    }
-    cout << "Pattern was not found in the text." << endl;
-    return -1;
+    return result;
 }
 
-void RabinKarpSearch2D(string* text, string* pattern)
+void Heap::maxHeapify(int parent)
 {
-    const int textLength = text[0].size();
-    const int patternLength = pattern[0].size();
-    const int positionsLength = textLength - patternLength + 1;
-    const int radix = 31;
+    int max = getMax(parent);
 
-    // vector that stores powers of radix
-    vector<long long> radixPowers(max (patternLength, textLength));
-    radixPowers[0] = 1;
-    for (int i = 1; i < radixPowers.size(); ++i)
+	// change root, put max into the root
+	if (max != parent)
     {
-        radixPowers[i] = radixPowers[i - 1] * radix;
-    }
+		swap(&heapVector[max], &heapVector[parent]);
+		maxHeapify(max);
+	}
+}
 
-    // matrix that stores values of hash function for the text
-    vector<vector<long long> > hashFunction (textLength);
-    for (int i = 0; i < textLength; ++i)
+void Heap::heapSort()
+{
+	while (heapSize > 1)
     {
-        hashFunction[i].assign(textLength, 0);
-        for (int j = 0; j < textLength; ++j)
+		extractMax();
+	}
+}
+
+int Heap::extractMax()
+{
+    swap(&heapVector[0], &heapVector[heapSize - 1]);
+    heapSize--;
+    maxHeapify(0);
+    return heapVector.at(heapSize - 1);
+}
+
+void Heap::insert(int key)
+{
+    heapVector.insert(heapVector.begin(), key);
+    heapSize++;
+    maxHeapify(0);
+}
+
+void Heap::increaseKey(int child, int increment)
+{
+    int parent = child / dimension;
+    for (int i(0); i < heapSize; i++)
+    {
+        if (child == heapVector.at(i))
         {
-            hashFunction[i][j] = (text[i][j] - 'a' + 1) * radixPowers[j];
-            if (j != 0)
+            heapVector.at(i) += increment;
+            while (child > parent)
             {
-                hashFunction[i][j] += hashFunction[i][j - 1];
-            }
-            //cout << "hash function [" << i << "][" << j << "] = " << hashFunction[i][j] << endl;
-        }
-    }
-
-    // keys - values of hash function to search in the text
-    vector<long long> keys(patternLength);
-    for (int i = 0; i < patternLength; ++i)
-    {
-        keys[i] = 0;
-        for (int j = 0; j < patternLength; ++j)
-        {
-            keys[i] += (pattern[i][j] - 'a' + 1) * radixPowers[j];
-        }
-    }
-
-    // i - number of row, j - keys[j] was found at position positionsOfPattern[i][j]
-    vector <vector<int> > positionsOfPattern(textLength);
-
-    // searching keys
-    for (int i = 0; i < textLength; ++i)
-    {
-        positionsOfPattern[i].assign(patternLength, 0);
-        for (int j = 0; j < positionsLength; ++j)
-        {
-            long long currentValue = hashFunction[i][j + patternLength - 1];
-            if (j != 0)
-            {
-                currentValue -= hashFunction[i][j - 1];
-            }
-
-            for (int k = 0; k < min(int(i + 1), patternLength); ++k)
-            {
-                if (currentValue == keys[k] * radixPowers[j])
-                {
-                    positionsOfPattern[i][k] = j + 1; // saving found position
-                }
+                maxHeapify(parent);
+                child = parent;
+                parent = parent / dimension;
             }
         }
-    }
-
-    for (int i = 0; i < textLength; ++i)
-    {
-        for (int k = 0; k < patternLength; ++k)
-        {
-            cout << "Position[" << i << "][" << k << "] = " << positionsOfPattern[i][k] << endl;
-        }
-    }
-
-    //printing result
-    bool matchFound = false;
-    for (int i = 0; i < textLength; ++i)
-    {
-        for (int k = 0; k < patternLength; ++k)
-        {
-            if (positionsOfPattern[i][k] != 0)
-            {
-                bool printResult = true;
-                int shift = positionsOfPattern[i][k];
-
-                int l = k + 1;
-                for (int j = i + 1; j < positionsLength + 1; ++j, ++l)
-                {
-                    if (positionsOfPattern[j][l] != shift) // for each row shift must be the same
-                    {
-                        printResult = false;
-                        break;
-                    }
-                    if (printResult)
-                    {
-                        matchFound = true;
-                        cout << "Pattern was found in the text. Position(row, column): ("
-                            << i + 1 << ", " << positionsOfPattern[i][k] << ")" << endl;
-                    }
-                }
-            }
-        }
-    }
-
-    if (!matchFound)
-    {
-        cout << "No match!" << endl;
     }
 }
 
-void TestRabinKarp()
+void Heap::printVector()
 {
-    string text = "Jim saw me in a barbershop.";
-    string pattern = "barber";
-    cout << "Text: " << text << endl;
-    cout << "Pattern: " << pattern << endl;
-    RabinKarpSearch(text, pattern);
+	for (int i(0); i < heapVector.size(); i++)
+    {
+		cout << heapVector[i] << " ";
+	}
+	cout << endl;
 }
 
-void TestRabinKarp2D()
+vector<int> generateRandomVector(int size)
 {
-    const int textSize = 3;
-    const int patternSize = 2;
-    string* text = new string[textSize];
-    string* pattern = new string[patternSize];
-
-    text[0] = "bcc";
-    text[1] = "caa";
-    text[2] = "abb";
-
-    pattern[0] = "ca";
-    pattern[1] = "ab";
-
-    cout << "Text: " << endl;
-    for (int i = 0; i < textSize; ++i)
+    cout << "Randomly generated vector is: " << endl;
+    vector<int> result;
+    for (int i(0); i < size; i++)
     {
-        cout << text[i] << endl;
+        result.push_back(rand() % 100 + 1);
+        cout << result[i] << " ";
     }
-
-    cout << "Pattern: " << endl;
-    for (int i = 0; i < patternSize; ++i)
-    {
-        cout << pattern[i] << endl;
-    }
-    RabinKarpSearch2D(text, pattern);
+    cout << endl;
+    return result;
 }
 
 int main()
 {
-    //TestRabinKarp();
-    TestRabinKarp2D();
+    srand(time(NULL));
+    const int size = 15;
+	vector<int> newVector = generateRandomVector(size);
+	Heap heap1(newVector);
+	cout << "Heap: " << endl;
+	heap1.printVector();
+
+	cout << "Extracting max: " << endl;
+	heap1.extractMax();
+	heap1.printVector();
+
+	int key = rand() % 70 + 30;
+	cout << "Inserting key " << key << endl;
+	heap1.insert(key);
+	heap1.printVector();
+
+	int increment = rand() % 40;
+	cout << "Inserting key " << key  << " by " << increment << endl;
+	heap1.increaseKey(key, increment);
+	heap1.printVector();
+
+	heap1.heapSort();
+	cout << "Sorted vector: " << endl;
+	heap1.printVector();
 }
