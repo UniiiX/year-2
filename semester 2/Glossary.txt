@@ -1,0 +1,15 @@
+User - a person who interacts with the system, hence has the ability/access to do so.
+
+Registered User -  already registered user who hasn't logged in to the system yet.
+
+Guest User - not registered yet user.
+
+Authorized User -  already registered user who has logged in to the system.
+
+Media - photos/videos.
+
+News Feed - list of updates on people and groups you are subscribed to.
+
+Interlocutors - set of users who participate in a conversation.
+
+Last time seen - time of the last user's log out.
