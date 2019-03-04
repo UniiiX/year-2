@@ -14,6 +14,10 @@ Conversation - chat in which users can write messages.
 
 Interlocutors - set of users who participate in a conversation.
 
+Global Playlist - all songs that are added by the user are automatically placed in it.
+
+Music - set of playlists + global playlist.
+
 Last time seen - time of the last user's log out.
 
 Follow = Subsrcribe to.
