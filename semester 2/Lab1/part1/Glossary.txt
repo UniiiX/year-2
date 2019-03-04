@@ -18,6 +18,8 @@ Global Playlist - all songs that are added by the user are automatically placed 
 
 Music - set of playlists + global playlist.
 
+General Group - generalized term which is used to describe group of either type Business, Thematic or Public Page.
+
 Last time seen - time of the last user's log out.
 
 Follow = Subsrcribe to.
