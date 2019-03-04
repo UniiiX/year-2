@@ -4,7 +4,7 @@ Registered User -  already who has already signed up.
 
 Guest User - not registered yet user.
 
-Media - photos/videos.
+Media - photo/video.
 
 News Feed - list of updates on people and groups you follow.
 
