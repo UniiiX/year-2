@@ -8,6 +8,10 @@ Media - photos/videos.
 
 News Feed - list of updates on people and groups you follow.
 
+Message - consists of text, media, songs, attached messages.
+
+Conversation - chat in which users can write messages.
+
 Interlocutors - set of users who participate in a conversation.
 
 Last time seen - time of the last user's log out.
