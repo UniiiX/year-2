@@ -22,6 +22,10 @@ General Group - generalized term which is used to describe group of either type 
 
 Last time seen - time of the last user's log out.
 
+Client - requester of services.
+
+Server - provider of serveices.
+
 Follow = Subsrcribe to.
 
 Sign in = log in.
