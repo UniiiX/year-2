@@ -1,0 +1,27 @@
+Binary Search Tree - rooted binary tree, whose internal nodes each store a key and an associated value and each 
+have two distinguished sub-trees, commonly denoted left and right. The tree additionally satisfies the binary
+search property, which states that the key in each node must be greater than or equal to any key stored in the left
+sub-tree, and less than or equal to any key stored in the right sub-tree.
+
+Splay Tree - self-balancing binary search tree with the additional property that recently accessed elements are quick
+to access again. It performs basic operations such as insertion, look-up and removal in O(log n) amortized time. For 
+many sequences of non-random operations, splay trees perform better than other search trees, even when the specific 
+pattern of the sequence is unknown.
+
+Group - group of students(presumably, in some university).
+
+Student - a person who studies at a university.
+
+Print <some> tree - means printing tree of <some> type into console using inorder tree walk.
+
+Predecessor (of some node) - node with the largest key that is smaller than the key of target node.
+
+Successor (of some node) - node with the smallest key that is greater than the key of target node.
+
+Splay - operation that puts the target node into the root by consecutively rotating it left or right.
+
+Merge - operation that merges two splay trees, provided that all keys of one subtree are smaller than all keys of
+another one.
+
+Split (by some key) - opreation that splits splay tree into two trees so that all keys in one of them are smaller than
+the target key and all keys of another one are greater than the target key.
