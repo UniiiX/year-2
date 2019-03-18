@@ -23,5 +23,5 @@ Splay - operation that puts the target node into the root by consecutively rotat
 Merge - operation that merges two splay trees, provided that all keys of one subtree are smaller than all keys of
 another one.
 
-Split (by some key) - opreation that splits splay tree into two trees so that all keys in one of them are smaller than
+Split (by some key) - operation that splits splay tree into two trees so that all keys in one of them are smaller than
 the target key and all keys of another one are greater than the target key.
