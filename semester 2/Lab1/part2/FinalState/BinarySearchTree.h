@@ -167,6 +167,10 @@ typename BinarySearchTree<K, V>::Node* BinarySearchTree<K, V>::successor(Node* t
 template <typename K, typename V>
 void BinarySearchTree<K, V>::rotate(Node* pivot)
 {
+    if (!pivot || !pivot->parent)
+    {
+        return;
+    }
     // short references
     bool direction = (pivot == pivot->parent->left); // true - rotate right, false - left
     Node* parent = pivot->parent;
