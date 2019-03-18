@@ -1,0 +1,48 @@
+Changes that were made to the program in comparison to its initial state:
+
+1. Added unit tests (SplayTreeTests.cpp):
+Tested work of insert, remove and search methods with integers with the help of Catch2 framework.
+
+2. Created generaliztion for SplayTree - BinarySearchTree:
+  - moved field root of type Node* from the class SplayTree to the protected section of the class BinarySeacrhTree;
+  - moved methods minimum, maximum, predecessor, successor, zig, searchUtility, print, search;
+  from the class SplayTree to the protected section of the class BinarySeacrhTree;
+  from class SplayTree to protected section of class BinarySeacrhTree;
+  - renamed method zig to rotate;
+  - renamed method searchUtility to search parent;
+  - renamed method search to search_;
+  - moved struct Node from class SplayTree to protected section of class BinarySeacrhTree;
+  - implemented public getter getRoot() for field root of class BinarySearchTree;
+  - implemented public virtual methods search, insert, remove and print.
+  
+3. Inherited class SplayTree form the class BinarySearchTree:
+  - fixed a bug in split method(now if the node with desired key wasn't found, pivot becomes its successor or predecessor);
+  - methods insert, remove, search now override respective methods of the class BinarySearchTree;
+  - call of zig method in splay method was replaced by the corresponding method rotate of class BinarySearchTree;
+  - method search now returns read-only object of type Node;
+  - Node* toBeInserted was renamed to Node* inserted in insert method;
+  - methods insert and search_ of the class BinarySearchTree is now used in respective method of class SplayTree;
+  - commented out the line which was responsible for printing message that key was not found in method remove,
+  because it was flooding the console;
+  - renamed Node* toBeDeleted to Node* toBeRemoved in method remove;
+  - replaced all calls to the field root with calls to the respective field of the class BinarySearchTree;
+  - replaced call of method searchUtility with call of method search_ of the class BinarySearchTree;
+  
+4. main.cpp:
+  - implemented function testBinarySearchTree() to demonstrate the work of BinarySearchTree class;
+  - implemented function printExampleForCatch2UnitTest() to print() the instance of the class SplayTree that
+  is used to test the work of insert, remove and search methods of the class SplayTree in SplayTreeTests.cpp;
+  - added calls of testBinarySearchTree() and printExampleForCatch2UnitTest() functions into main() function;
+  - commented out calls of functions testInt(), testMyData(), testBinarySearchTree(), printExampleForCatch2UnitTest(),
+  so that they aren't flooding the output when it is not needed;
+  - added two arguments - int argc, char* argv[] to the declaration of function main();
+  - main() function now returns Catch::Session().run(argc, argv) in order to run unit tests wirtten with the 
+  help of Catch2 framework.
+  
+5. Changes that were done during the first iteration of writing the program(form zero to what is referred to as 
+initial state in the context of this laboratory work) and are significant enough to be mentioned:
+  - classical implementation of the Splay Tree(https://en.wikipedia.org/wiki/Splay_tree) was improved by replacing
+  methods Zig, Zig-Zig and Zig-Zag with one single method (zig in the context of initial state, or rotate in the context 
+  final state of the program) that rotates the node left or right depending on it being respectively right or left 
+  child of its parent;
+  
