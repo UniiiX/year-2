@@ -39,7 +39,7 @@ Tested work of insert, remove and search methods with integers with the help of 
   - main() function now returns Catch::Session().run(argc, argv) in order to run unit tests wirtten with the 
   help of Catch2 framework.
   
-5. Changes that were done during the first iteration of writing the program(form zero to what is referred to as 
+5. Changes that were done during the first iteration of writing the program(from zero to what is referred to as 
 initial state in the context of this laboratory work) and are significant enough to be mentioned:
   - classical implementation of the Splay Tree(https://en.wikipedia.org/wiki/Splay_tree) was improved by replacing
   methods Zig, Zig-Zig and Zig-Zag with one single method (zig in the context of initial state, or rotate in the context 
