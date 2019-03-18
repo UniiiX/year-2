@@ -66,9 +66,7 @@ typename SplayTree<K, V>::Node* SplayTree<K, V>::split(const K & key)
     }
     else
     {
-        (BinarySearchTree<K, V>::successor(found)) ?
-            pivot = BinarySearchTree<K, V>::successor(found) :
-            pivot = BinarySearchTree<K, V>::predecessor(found);
+            pivot = BinarySearchTree<K, V>::searchParent(key);
     }
 
     splay(pivot);
