@@ -43,6 +43,6 @@ Tested work of insert, remove and search methods with integers with the help of 
 initial state in the context of this laboratory work) and are significant enough to be mentioned:
   - classical implementation of the Splay Tree(https://en.wikipedia.org/wiki/Splay_tree) was improved by replacing
   methods Zig, Zig-Zig and Zig-Zag with one single method (zig in the context of initial state, or rotate in the context 
-  final state of the program) that rotates the node left or right depending on it being respectively right or left 
+  of final state of the program) that rotates the node left or right depending on it being respectively right or left 
   child of its parent;
   
