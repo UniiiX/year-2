@@ -12,6 +12,8 @@ Group - group of students(presumably, in some university).
 
 Student - a person who studies at a university.
 
+Inorder tree walk(inorder tree traversal) - traversal of the tree in the following order: left subtree, root, right subtree.
+
 Print <some> tree - means printing tree of <some> type into console using inorder tree walk.
 
 Predecessor (of some node) - node with the largest key that is smaller than the key of target node.
