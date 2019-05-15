@@ -10,17 +10,17 @@ by prefixing every class with bst like this: `bst::BinarySearchTree<int, int> = 
 *Don't worry if you don't understand what the code above does, we will come back to explaining it later.*
 From now on we will assume that code in the following examples has `using namespace bst` string somewhere before it for simplicity.
 
-## * Template parameters
+* ## Template parameters
 **Every** single class (except for enum classes like TreeType and Color) in bst library is template with **two** paramemters:
   1. key
   2. value
 This is due to tree nodes containing key and value inside them, so binary search trees from the library can be used as a map
 
-## * **Three** different levels of library usage
+* ## **Three** different levels of library usage
 There are 3 different levels that you can use bst library at:
 the more difficult the level is - the more powerful functionality it provides you with
 Let's go through them in the least difficulty order
-  #### 1. Using bst library through its facade:
+  1. #### Using bst library through its facade:
   If you all you need is the most basic functionality then there is no better way to use bst than through `BinarySearchTreeFacade` class
   Lets's have a closer look at the tools it provides you with
     ###### * Creating binary search trees: 
@@ -38,14 +38,14 @@ Let's go through them in the least difficulty order
         auto st = facade.create(TreeType::splayTree);
     Here enum class TreeType is used as an argument to specify what kind of binarySearchTree you want to create
     
-    ##### * Inserting elements: 
+    * ##### Inserting elements: 
     Suppose we've created our trees as in the example above and what we want to do now is to insert some elements into them
     That's how you can do it with facade: `facade.insert(bst, 20, 100);` 
     Here we inserted node with the key 20 and value 100 into the BinarySearchTree instance of type
     TreeType::binarySearchTree we had created earlier on.
     Same syntax facade.insert(tree, key, value) goes for other types of trees as well.
     
-    ##### * Removing elements:
+    * ##### Removing elements:
     Pretty much the same as inserting elements except for you don't need to pass the value into the method: 
     `facade.remove(bst, 20);`
     If you pass into remove method a key that is absent in the tree AbsentKey exception will be thrown, that's why
