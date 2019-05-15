@@ -51,7 +51,7 @@ Same syntax facade.insert(tree, key, value) goes for other types of trees as wel
 Pretty much the same as inserting elements except for you don't need to pass the value into the method: 
 `facade.remove(bst, 20);`
 If you pass into remove method a key that is absent in the tree AbsentKey exception will be thrown, that's why
-if you are not sure if a key is present in the tree or not better wrap call of remove in try-catch block:
+if you are not sure if a key is present in the tree or not, better wrap call of remove in try-catch block:
 
     try
     {
