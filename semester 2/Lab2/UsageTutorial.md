@@ -33,23 +33,27 @@ All you need to do to get started is include a single header file: `#include "Bi
 
 Lets's have a closer look at the tools it provides you with
 #### Creating binary search trees: 
-`BinarySearchTree<int, int> bst = BinarySearchTreeFacade<int, int>::getInstance().create(TreeType::binarySearchTree);` 
+`BinarySearchTree<int, int> bst = BinarySearchTreesFacade<int, int>::getInstance().create(TreeType::binarySearchTree);`
+
 **or** you can kind of ommit the boring part using auto: 
 `auto bst =  BinarySearchTreeFacade<int, int>::getInstance().create(TreeType::binarySearchTree);`
 Well... Doesn't look like we've managed to ommit the boring part, but that's crucial! 
+
 Note that BinarySearchTreesFacade is a singleton class.
+
 That's why when it comes down not to only creating a binary search tree using facade may become a really painful experience.
 What I suggest is to save the facade instance into a variable and then 
 use it instead of the ugly expression to the right of = operator:
 
-    auto & facade = BinarySearchTreeFacade<int, int>::getInstance();
+    auto & facade = BinarySearchTreesFacade<int, int>::getInstance();
     auto bst = facade.create(TreeType::binarySearchTree);
     auto rbt = facade.create(TreeType::redBlackTree);
     auto st = facade.create(TreeType::splayTree);
 Here enum class TreeType is used as an argument to specify what kind of binarySearchTree you want to create
     
 #### Inserting elements: 
-Suppose we've created our trees as in the example above and what we want to do now is to insert some elements into them
+Suppose we've created our trees as in the example above and what we want to do now is to insert some elements into them.
+
 That's how you can do it with facade: `facade.insert(bst, 20, 100);` 
 Here we inserted node with the key 20 and value 100 into the BinarySearchTree instance of type
 TreeType::binarySearchTree we had created earlier on.
