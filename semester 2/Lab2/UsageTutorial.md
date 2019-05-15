@@ -23,7 +23,6 @@ This is due to tree nodes containing key and value inside them, so binary search
 
 * ## **Three** different levels of library usage
 There are 3 different levels that you can use bst library at:
-
 the more difficult the level is - the more powerful functionality it provides you with.
 
 Let's go through them in the least difficulty order
@@ -34,8 +33,8 @@ All you need to do to get started is include a single header file: `#include "Bi
 
 Lets's have a closer look at the tools it provides you with
 #### Creating binary search trees: 
-`BinarySearchTree<int, int> bst = BinarySearchTreeFacade<int, int>::getInstance().create(TreeType::binarySearchTree);` **or**
-you can kind of ommit the boring part using auto: 
+`BinarySearchTree<int, int> bst = BinarySearchTreeFacade<int, int>::getInstance().create(TreeType::binarySearchTree);` 
+**or** you can kind of ommit the boring part using auto: 
 `auto bst =  BinarySearchTreeFacade<int, int>::getInstance().create(TreeType::binarySearchTree);`
 Well... Doesn't look like we've managed to ommit the boring part, but that's crucial! 
 Note that BinarySearchTreesFacade is a singleton class.
