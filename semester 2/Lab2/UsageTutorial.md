@@ -84,7 +84,6 @@ Syntax for lookup looks as follows: `facade.search(key)`
 Method returns const Node<K, V>* (K - type of key, V - type of value), 
 so you can check whether a key is present in the tree like follows:
 
-    using std::cout;
     auto found = facade.search(1);
     if (found)
     {
