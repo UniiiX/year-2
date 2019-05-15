@@ -14,6 +14,7 @@ From now on we will assume that code in the following examples has `using namesp
 **Every** single class (except for enum classes like TreeType and Color) in bst library is template with **two** paramemters:
   1. key
   2. value
+  
 This is due to tree nodes containing key and value inside them, so binary search trees from the library can be used as a map
 
 * ## **Three** different levels of library usage
