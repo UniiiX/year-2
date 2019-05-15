@@ -64,7 +64,7 @@ Actually it is not void as someone could've suggested, instead these methods ret
 as an argument, so you can chain calls of insert/remove like this: `facade.insert(bst, 1, 100).insert(bst, 2, 200);`
     
 #### Element lookup:
-Syntax for lookup looks as follows: facade.search(key)
+Syntax for lookup looks as follows: `facade.search(key)`
 Method returns const Node<K, V>* (K - type of key, V - type of value), 
 so you can check whether a key is present in the tree like follows:
     using std::cout;
