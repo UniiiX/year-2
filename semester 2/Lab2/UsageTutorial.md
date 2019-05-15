@@ -1,9 +1,9 @@
 # This is bst(Binary Search Trees) library usage tutorial
 
-## * Tree types
+* ## Tree types
 Currently bst library supports three types of binary search trees, that is: [binary search tree](https://en.wikipedia.org/wiki/Binary_search_tree) itself, [splay tree](https://en.wikipedia.org/wiki/Splay_tree) and [red-black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree)
 
-## * Namespace
+* ## Namespace
 Everything in bst library lives within a bst namespace.
 You can access classes either by adding `using namespace bst` at the beginning of your file **or**
 by prefixing every class with bst like this: `bst::BinarySearchTree<int, int> = bst::BinarySearchTreeFactory<int, int>().create();`
