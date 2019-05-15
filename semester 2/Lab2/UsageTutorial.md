@@ -88,5 +88,8 @@ Probably the easiest part about using facade is printing the tree.
 Just pass your tree instance into the print method `facade.print(bst);` and vuala!
 Trees are printed using [out-order tree traversal](https://en.wikipedia.org/wiki/Tree_traversal), right child above, left child below the parent, children are indented with 4 spaces.
 Here are some examples of output:
-  * ![Binary search tree](https://raw.githubusercontent.com/UniiiX/year-2/master/semester%202/Lab2/TutorialImages/TreeVisualizationConsoleOutput.JPG)
-    
+Binary search tree: 
+![Binary search tree](https://raw.githubusercontent.com/UniiiX/year-2/master/semester%202/Lab2/TutorialImages/TreeVisualizationConsoleOutput.JPG)
+
+Red-black tree:
+![Red-black tree](https://raw.githubusercontent.com/UniiiX/year-2/master/semester%202/Lab2/TutorialImages/TreeVisualizationConsoleOutput2.JPG)
