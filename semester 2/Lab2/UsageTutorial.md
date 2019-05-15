@@ -83,5 +83,5 @@ Let's go through them in the least difficulty order
     Just pass your tree instance into the print method `facade.print(bst);` and vuala!
     Trees are printed using out-order tree traversal, right child above, left child below the parent,
     children are indented with 4 spaces.
-    
+  2. 
     
