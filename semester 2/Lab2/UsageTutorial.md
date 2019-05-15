@@ -32,6 +32,7 @@ Note that BinarySearchTreeFacade is a singleton class.
 That's why when it comes down not to only creating a binary search tree using facade may become a really painful experience.
 What I suggest is to save the facade instance into a variable and then 
 use it instead of the ugly expression to the right of = operator:
+
     auto & facade = BinarySearchTreeFacade<int, int>::getInstance();
     auto bst = facade.create(TreeType::binarySearchTree);
     auto rbt = facade.create(TreeType::redBlackTree);
@@ -50,6 +51,7 @@ Pretty much the same as inserting elements except for you don't need to pass the
 `facade.remove(bst, 20);`
 If you pass into remove method a key that is absent in the tree AbsentKey exception will be thrown, that's why
 if you are not sure if a key is present in the tree or not better wrap call of remove in try-catch block:
+
     try
     {
         facade.remove(bst, 0)
@@ -67,6 +69,7 @@ as an argument, so you can chain calls of insert/remove like this: `facade.inser
 Syntax for lookup looks as follows: `facade.search(key)`
 Method returns const Node<K, V>* (K - type of key, V - type of value), 
 so you can check whether a key is present in the tree like follows:
+
     using std::cout;
     auto found = facade.search(1);
     if (found)
@@ -81,6 +84,6 @@ so you can check whether a key is present in the tree like follows:
 #### Printing the tree into console: 
 Probably the easiest part about using facade is printing the tree.
 Just pass your tree instance into the print method `facade.print(bst);` and vuala!
-Trees are printed using out-order tree traversal, right child above, left child below the parent,
+Trees are printed using [out-order tree traversal](https://en.wikipedia.org/wiki/Tree_traversal), right child above, left child below the parent,
 children are indented with 4 spaces.
     
