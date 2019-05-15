@@ -80,6 +80,7 @@ as an argument, so you can chain calls of insert/remove like this: `facade.inser
     
 #### Element lookup:
 Syntax for lookup looks as follows: `facade.search(key)`
+
 Method returns const Node<K, V>* (K - type of key, V - type of value), 
 so you can check whether a key is present in the tree like follows:
 
@@ -96,7 +97,9 @@ so you can check whether a key is present in the tree like follows:
     
 #### Printing the tree into command line: 
 Probably the easiest part about using facade is printing the tree.
+
 Just pass your tree instance into the print method `facade.print(bst);` and vuala!
+
 Trees are printed using [out-order tree traversal](https://en.wikipedia.org/wiki/Tree_traversal), right child above, left child below the parent, children are indented with 4 spaces.
 Here are some examples of output:
 
