@@ -6,8 +6,12 @@ Currently bst library supports three types of binary search trees, that is: [bin
 * ## Namespace
 Everything in bst library lives within a bst namespace.
 You can access classes either by adding `using namespace bst` at the beginning of your file **or**
-by prefixing every class with bst like this: `bst::BinarySearchTree<int, int> = bst::BinarySearchTreeFactory<int, int>().create();`
+by prefixing every class with bst like this: 
+
+`bst::BinarySearchTree<int, int> = bst::BinarySearchTreeFactory<int, int>().create();`
+
 *Don't worry if you don't understand what the code above does, we will come back to explaining it later.*
+
 From now on we will assume that code in the following examples has `using namespace bst` string somewhere before it for simplicity.
 
 * ## Template parameters
@@ -19,11 +23,15 @@ This is due to tree nodes containing key and value inside them, so binary search
 
 * ## **Three** different levels of library usage
 There are 3 different levels that you can use bst library at:
+
 the more difficult the level is - the more powerful functionality it provides you with.
+
 Let's go through them in the least difficulty order
 ### Using bst library through its facade:
-If you all you need is the most basic functionality then there is no better way to use bst than through `BinarySearchTreesFacade` class
+If you all you need is the most basic functionality then there is no better way to use bst than through `BinarySearchTreesFacade` class.
+
 All you need to do to get started is include a single header file: `#include "BinarySearchTreesFacade.h"`
+
 Lets's have a closer look at the tools it provides you with
 #### Creating binary search trees: 
 `BinarySearchTree<int, int> bst = BinarySearchTreeFacade<int, int>::getInstance().create(TreeType::binarySearchTree);` **or**
