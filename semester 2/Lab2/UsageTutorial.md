@@ -22,14 +22,15 @@ There are 3 different levels that you can use bst library at:
 the more difficult the level is - the more powerful functionality it provides you with.
 Let's go through them in the least difficulty order
 ### Using bst library through its facade:
-If you all you need is the most basic functionality then there is no better way to use bst than through `BinarySearchTreeFacade` class
+If you all you need is the most basic functionality then there is no better way to use bst than through `BinarySearchTreesFacade` class
+All you need to do to get started is include a single header file: `#include "BinarySearchTreesFacade.h"`
 Lets's have a closer look at the tools it provides you with
 #### Creating binary search trees: 
 `BinarySearchTree<int, int> bst = BinarySearchTreeFacade<int, int>::getInstance().create(TreeType::binarySearchTree);` **or**
 you can kind of ommit the boring part using auto: 
 `auto bst =  BinarySearchTreeFacade<int, int>::getInstance().create(TreeType::binarySearchTree);`
 Well... Doesn't look like we've managed to ommit the boring part, but that's crucial! 
-Note that BinarySearchTreeFacade is a singleton class.
+Note that BinarySearchTreesFacade is a singleton class.
 That's why when it comes down not to only creating a binary search tree using facade may become a really painful experience.
 What I suggest is to save the facade instance into a variable and then 
 use it instead of the ugly expression to the right of = operator:
