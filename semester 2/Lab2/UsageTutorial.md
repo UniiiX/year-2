@@ -23,7 +23,7 @@ Let's go through them in the least difficulty order
 ### Using bst library through its facade:
 If you all you need is the most basic functionality then there is no better way to use bst than through `BinarySearchTreeFacade` class
 Lets's have a closer look at the tools it provides you with
-##### Creating binary search trees: 
+#### Creating binary search trees: 
 `BinarySearchTree<int, int> bst = BinarySearchTreeFacade<int, int>::getInstance().create(TreeType::binarySearchTree);` **or**
 you can kind of ommit the boring part using auto: 
 `auto bst =  BinarySearchTreeFacade<int, int>::getInstance().create(TreeType::binarySearchTree);`
@@ -38,14 +38,14 @@ use it instead of the ugly expression to the right of = operator:
     auto st = facade.create(TreeType::splayTree);
 Here enum class TreeType is used as an argument to specify what kind of binarySearchTree you want to create
     
-##### Inserting elements: 
+#### Inserting elements: 
 Suppose we've created our trees as in the example above and what we want to do now is to insert some elements into them
 That's how you can do it with facade: `facade.insert(bst, 20, 100);` 
 Here we inserted node with the key 20 and value 100 into the BinarySearchTree instance of type
 TreeType::binarySearchTree we had created earlier on.
 Same syntax facade.insert(tree, key, value) goes for other types of trees as well.
     
-##### Removing elements:
+#### Removing elements:
 Pretty much the same as inserting elements except for you don't need to pass the value into the method: 
 `facade.remove(bst, 20);`
 If you pass into remove method a key that is absent in the tree AbsentKey exception will be thrown, that's why
@@ -63,7 +63,7 @@ if you are not sure if a key is present in the tree or not better wrap call of r
 Actually it is not void as someone could've suggested, instead these methods return tree instance that was passed
 as an argument, so you can chain calls of insert/remove like this: `facade.insert(bst, 1, 100).insert(bst, 2, 200);`
     
-##### Element lookup:
+#### Element lookup:
 Syntax for lookup looks as follows: facade.search(key)
 Method returns const Node<K, V>* (K - type of key, V - type of value), 
 so you can check whether a key is present in the tree like follows:
@@ -78,7 +78,7 @@ so you can check whether a key is present in the tree like follows:
         std::cout << "Absent";
     }
     
-##### Printing the tree into console: 
+#### Printing the tree into console: 
 Probably the easiest part about using facade is printing the tree.
 Just pass your tree instance into the print method `facade.print(bst);` and vuala!
 Trees are printed using out-order tree traversal, right child above, left child below the parent,
