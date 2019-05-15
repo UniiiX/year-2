@@ -36,11 +36,11 @@ namespace bst
             target.remove(key);
         }
 
-        void search(
+        Node<K, V>* search(
             BinarySearchTree<K, V> & target,
             const K & key) const
         {
-            target.search(key);
+            return target.search(key);
         }
 
         BinarySearchTree<K, V> create(const TreeType & type) const
