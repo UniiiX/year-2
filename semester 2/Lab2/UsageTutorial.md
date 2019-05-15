@@ -83,9 +83,10 @@ so you can check whether a key is present in the tree like follows:
         std::cout << "Absent";
     }
     
-#### Printing the tree into console: 
+#### Printing the tree into command line: 
 Probably the easiest part about using facade is printing the tree.
 Just pass your tree instance into the print method `facade.print(bst);` and vuala!
-Trees are printed using [out-order tree traversal](https://en.wikipedia.org/wiki/Tree_traversal), right child above, left child below the parent,
-children are indented with 4 spaces.
+Trees are printed using [out-order tree traversal](https://en.wikipedia.org/wiki/Tree_traversal), right child above, left child below the parent, children are indented with 4 spaces.
+Here are some examples of output:
+  * ![Binary search tree](https://raw.githubusercontent.com/UniiiX/year-2/master/semester%202/Lab2/TutorialImages/TreeVisualizationConsoleOutput.JPG)
     
