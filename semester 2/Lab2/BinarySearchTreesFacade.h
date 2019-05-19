@@ -60,6 +60,8 @@ namespace bst
                     return RedBlackTreeFactory<K, V>().create();
                 }
             }
+            // just to silence the warning, this line is never really reached in fact
+            return BinarySearchTreeFactory<K, V>().create();
         }
 
         void print(const BinarySearchTree<K, V> & target) const
