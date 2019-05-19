@@ -12,7 +12,7 @@ by prefixing every class with bst like this:
 
 *Don't worry if you don't understand what the code above does, we will come back to explaining it later.*
 
-From now on we will assume that code in the following examples has `using namespace bst` string somewhere before it for simplicity.
+From now on we will assume that code in the following examples has `using namespace bst` line somewhere before it for simplicity.
 
 * ## Template parameters
 **Every** single class (except for enum classes like TreeType and Color) in bst library is template with **two** paramemters:
