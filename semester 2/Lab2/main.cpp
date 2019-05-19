@@ -1,7 +1,10 @@
+#define CATCH_CONFIG_RUNNER
+
 #include <iostream>
 #include <cstdlib>
 #include <vector>
 
+#include <catch.hpp>
 #include <PrinterProxy.h>
 #include <BinarySearchTree.h>
 #include <BinarySearchTreesFacade.h>
@@ -21,6 +24,11 @@ void testBST()
         bst.insert(keys.at(i), 0);
     }
     PrinterProxy<int, int>::print(bst);
+
+    if (bst.search(keys.at(size / 2)))
+    {
+        cout << "Found key " << keys.at(size / 2) << endl;
+    }
 
     for (int i = 0; i < size; ++i)
     {
@@ -73,7 +81,12 @@ void testFacade()
         keys.push_back(rand() % 1000);
         facade.insert(rbTree, keys.at(i), 0);
     }
-    BinarySearchTreesFacade<int, int>::getInstance().print(rbTree);
+    facade.print(rbTree);
+
+    if (facade.search(rbTree, keys.at(size / 2)))
+    {
+        cout << "Found key " << keys.at(size / 2) << endl;
+    }
 
     auto splayTree = facade.create(TreeType::splayTree);
     for (int i = 0; i < size; ++i)
@@ -83,10 +96,11 @@ void testFacade()
     facade.print(splayTree);
 }
 
-int main()
+int main(int argc, char* argv[])
 {
 //    testBST();
 //    testRBTree();
 //    testSplayTree();
 //    testFacade();
+    return Catch::Session().run(argc, argv);
 }
