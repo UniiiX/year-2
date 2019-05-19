@@ -26,14 +26,14 @@ namespace bst
             const K & key,
             const V & value) const
         {
-            target.insert(key, value);
+            return target.insert(key, value);
         }
 
         BinarySearchTree<K, V> & remove(
             BinarySearchTree<K, V> & target,
             const K & key) const
         {
-            target.remove(key);
+            return target.remove(key);
         }
 
         Node<K, V>* search(
