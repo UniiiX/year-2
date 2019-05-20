@@ -109,3 +109,51 @@ Binary search tree:
 Red-black tree:
 
 ![Red-black tree](https://raw.githubusercontent.com/UniiiX/year-2/master/semester%202/Lab2/TutorialImages/TreeVisualizationConsoleOutput2.JPG)
+
+
+### Alternative ways to work with binary search trees:
+Advantages of BinarySearchTreesFacade class are that it encapsulates most frequently used alogorithms and makes it super easy to get
+started.
+However sometimes you might need more functionality or one can even feel more comfortable working with bst library not through its facade.
+
+You can access advanced functionality of bst library by including: `#include "BinarySearchTree.h"`
+#### Alternative ways to create binary search trees:
+As we've already mentioned BinarySearchTreesFacade's responsibility is to provide you with the most frequently used operations, however creation of binary search trees(just like every other operation within it) is not its responsibility. It only redirects the query to the responsible class;
+
+In fact, creation of binary search trees is fully responsibility of BinarySearchTreeFactory, RedBlackTreeFactory, SplayTreeFactory.
+All these classes implement interface of AbstractTreeFactory, which is - they provide you with create() method. 
+Thus, you can use all possible benefits of Abstract Factory pattern and create binary search trees like follows:
+
+    auto bst = BinarySearchTreeFactory<int, int>().create();
+    auto rbTree = RedBlackTreeFactory<int, int>().create();
+    auto splayTree = SplayTreeFactory<int, int>().create();
+
+#### Alternative ways to insert/remove/search:
+Here is how you can insert, remove and search elements into binary search trees through its instance: `bst.insert(key);`
+It is equivalent to calling `facade.insert(bst, key);` 
+Using this approach you don't no longer need to pass tree instance into the method.
+
+What are the other benefits?
+
+You can also use methods 
+
+    const Node<K, V>* minimum(Node<K, V>* target) const;
+    const Node<K, V>* maximum(Node<K, V>* target) const;
+    const Node<K, V>* predecessor(Node<K, V>* target) const;
+    const Node<K, V>* successor(Node<K, V>* target) const;
+    const Node<K, V>* getRoot() const;
+    const TreeType getType() const;
+    
+for whatever purpose you might need them for.
+
+First two methods return pointer to respectively node with min/max key in the subtree for which target is root.
+
+Next two, as someone could've guessed return pointer to node that is respectively previous/next key-wise to the target node.
+
+Finally, getRoot() and getType() return pointer to a root node and type of the tree respectively.
+
+#### Alternative ways to print binary search trees:
+Instead of doing it through bst library facade, you can achieve the same by including: `#include "PrinterProxy.h"`
+Just like facade, PrinterProxy redirects call of print operation to the most appropriate implementation of class Printer.
+You can't really get anything over the approach of printing trees through facade, however this is how one could use it:
+`PrinterProxy<int, int>::print(bst);`
