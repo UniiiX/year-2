@@ -23,14 +23,14 @@ namespace bst
         BinarySearchTreesInvariants & operator=(BinarySearchTreesInvariants &&) = delete;
 
         static bool obeysBinarySearchTreeInvariant(BinarySearchTree<K, V> & target);
-        static bool obeysBinarySearchTreeInvariant(Node<K, V>* target);
+        static bool obeysBinarySearchTreeInvariant(const Node<K, V>* target);
         static bool obeysRedBlackTreeInvariant(BinarySearchTree<K, V> & target);
 
         static bool rootIsBlack(BinarySearchTree<K, V> & target);
-        static bool redNodeCantHaveRedChild(Node<K, V>* target);
-        static bool nodesAreEitherBlackOrRed(Node<K, V>* target);
-        static bool simplePathsBlackLengthsAreEqual(Node<K, V>* target);
-        static int calculateLeftBranchBlackHeight(Node<K, V>* target);
+        static bool redNodeCantHaveRedChild(const Node<K, V>* target);
+        static bool nodesAreEitherBlackOrRed(const Node<K, V>* target);
+        static bool simplePathsBlackLengthsAreEqual(const Node<K, V>* target);
+        static int calculateLeftBranchBlackHeight(const Node<K, V>* target);
 
         static void setRootColor(BinarySearchTree<K, V> & target, const Color & color);
     };
@@ -42,7 +42,7 @@ namespace bst
     }
 
     template <typename K, typename V>
-    bool BinarySearchTreesInvariants<K, V>::obeysBinarySearchTreeInvariant(Node<K, V>* target)
+    bool BinarySearchTreesInvariants<K, V>::obeysBinarySearchTreeInvariant(const Node<K, V>* target)
     {
         if (!target)
         {
@@ -72,20 +72,21 @@ namespace bst
     }
 
     template <typename K, typename V>
-    bool BinarySearchTreesInvariants<K, V>::redNodeCantHaveRedChild(Node<K, V>* target)
+    bool BinarySearchTreesInvariants<K, V>::redNodeCantHaveRedChild(const Node<K, V>* target)
     {
         if (!target)
         {
             return true;
         }
-        return (RedBlackTreeImpl<K, V>::isBlack(target->getLeft()) &&
-                RedBlackTreeImpl<K, V>::isBlack(target->getRight()) &&
+        return (RedBlackTreeImpl<K, V>::isRed(target) ?
+                RedBlackTreeImpl<K, V>::isBlack(target->getLeft()) &&
+                RedBlackTreeImpl<K, V>::isBlack(target->getRight()) : true &&
                 redNodeCantHaveRedChild(target->getLeft()) &&
                 redNodeCantHaveRedChild(target->getRight()));
     }
 
     template <typename K, typename V>
-    bool BinarySearchTreesInvariants<K, V>::nodesAreEitherBlackOrRed(Node<K, V>* target)
+    bool BinarySearchTreesInvariants<K, V>::nodesAreEitherBlackOrRed(const Node<K, V>* target)
     {
         if (!target)
         {
@@ -98,7 +99,7 @@ namespace bst
     }
 
     template <typename K, typename V>
-    bool BinarySearchTreesInvariants<K, V>::simplePathsBlackLengthsAreEqual(Node<K, V>* target)
+    bool BinarySearchTreesInvariants<K, V>::simplePathsBlackLengthsAreEqual(const Node<K, V>* target)
     {
         if (!target)
         {
@@ -109,7 +110,7 @@ namespace bst
     }
 
     template <typename K, typename V>
-    int BinarySearchTreesInvariants<K, V>::calculateLeftBranchBlackHeight(Node<K, V>* target)
+    int BinarySearchTreesInvariants<K, V>::calculateLeftBranchBlackHeight(const Node<K, V>* target)
     {
         int result = 0;
         while (target)
