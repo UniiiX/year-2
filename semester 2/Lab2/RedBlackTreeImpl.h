@@ -3,15 +3,21 @@
 
 #include <BinarySearchTreeImpl.h>
 #include <TreeType.h>
+#include <BinarySearchTreesInvariants.h>
 
 namespace bst
 {
     template <typename, typename>
     class BinarySearchTreeImpl;
 
+    template <typename, typename>
+    class BinarySearchTreesInvariants;
+
     template <typename K, typename V>
     class RedBlackTreeImpl : public BinarySearchTreeImpl<K, V>
     {
+        friend class BinarySearchTreesInvariants<K, V>;
+
     public:
         RedBlackTreeImpl() {}
         virtual ~RedBlackTreeImpl() {}
@@ -37,8 +43,8 @@ namespace bst
         void replace(Node<K, V>* & root, Node<K, V>* first, Node<K, V>* second) const;
         void swapColors(Node<K, V>* first, Node<K, V>* second) const;
 
-        const bool isRed(const Node<K, V>* target) const;
-        const bool isBlack(const Node<K, V>* target) const;
+        static const bool isRed(const Node<K, V>* target);
+        static const bool isBlack(const Node<K, V>* target);
     };
 
 
@@ -324,7 +330,7 @@ namespace bst
             swapColors(sibling, sibling->getLeft());
             BinarySearchTreeImpl<K, V>::rotate(root, sibling->getLeft());
         }
-        else if (current == parent->getRight() && isBlack(sibling->getRight()))
+        else if (current == parent->getRight() && isBlack(sibling->getLeft()))
         {
             // paint sibling red and its right child black
             swapColors(sibling, sibling->getRight());
@@ -357,13 +363,13 @@ namespace bst
     }
 
     template <typename K, typename V>
-    const bool RedBlackTreeImpl<K, V>::isRed(const Node<K, V>* target) const
+    const bool RedBlackTreeImpl<K, V>::isRed(const Node<K, V>* target)
     {
         return (target && target->getColor() == Color::red);
     }
 
     template <typename K, typename V>
-    const bool RedBlackTreeImpl<K, V>::isBlack(const Node<K, V>* target) const
+    const bool RedBlackTreeImpl<K, V>::isBlack(const Node<K, V>* target)
     {
         return (!target || target->getColor() == Color::black);
     }
