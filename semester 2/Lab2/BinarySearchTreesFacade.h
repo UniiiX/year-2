@@ -2,6 +2,7 @@
 #define BINARYSEARCHTREESFACADE_H
 
 #include <BinarySearchTree.h>
+#include <PrinterProxy.h>
 
 namespace bst
 {
@@ -36,7 +37,7 @@ namespace bst
             return target.remove(key);
         }
 
-        Node<K, V>* search(
+        const Node<K, V>* search(
             BinarySearchTree<K, V> & target,
             const K & key) const
         {

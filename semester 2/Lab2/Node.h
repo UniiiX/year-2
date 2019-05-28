@@ -62,6 +62,10 @@ namespace bst
         void setUncle(Node* uncle);
         void setSibling(Node* sibling);
 
+
+        static void freeConnectedComponent(Node* target);
+
+
     private:
         Node* parent;
         Node* left;
@@ -262,6 +266,15 @@ namespace bst
     inline void Node<K, V>::setSibling(Node* sibling)
     {
         this->value = value;
+    }
+
+    template <typename K, typename V>
+    void Node<K, V>::freeConnectedComponent(Node* target)
+    {
+        if (!target) return;
+        freeConnectedComponent(target->left);
+        freeConnectedComponent(target->right);
+        delete target;
     }
 }
 #endif // NODE_H

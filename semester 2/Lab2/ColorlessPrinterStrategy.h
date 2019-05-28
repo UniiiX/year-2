@@ -1,6 +1,7 @@
 #ifndef COLORLESSPRINTERSTRATEGY_H
 #define COLORLESSPRINTERSTRATEGY_H
 
+#include <iostream>
 #include <PrinterStrategy.h>
 
 namespace bst
