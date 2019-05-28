@@ -18,6 +18,7 @@ namespace bst
         friend class BinarySearchTreeFactory<K, V>;
         friend class RedBlackTreeFactory<K, V>;
         friend class SplayTreeFactory<K, V>;
+        friend class BinarySearchTreesInvariants<K, V>;
 
     public:
         virtual ~BinarySearchTree();
