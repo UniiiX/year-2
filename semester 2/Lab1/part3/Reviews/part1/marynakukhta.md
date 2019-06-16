@@ -86,7 +86,7 @@ Every single << include >>, except for those between creating chats and sending 
 * To sum up - awful.
 
 ### 7. Чи всі важливі сценарії використання описано в моделі? Наскільки зрозумілі різні сценарії, зв’язки між ними?
-No search. As I've already mentioned, almost totally wrong usage of <<include>> on the Use Case diagram. 
+No search. As I've already mentioned, almost totally wrong usage of << include >> on the Use Case diagram. 
 
 ### 8. Наскільки доцільним є поділ системи на частини/компоненти/модулі/...?
 
