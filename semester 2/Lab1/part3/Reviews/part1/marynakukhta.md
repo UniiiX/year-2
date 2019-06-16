@@ -51,7 +51,7 @@ https://github.com/marynakukhta/Lab-First-2-semester-/tree/a27015c7420e457d3ef00
 
 ### 5. Наскільки коректно використана нотація UML, різні елементи та конектори?
 #### Use Case:
-Every single <<include>>, except for those between creating chats and sending a message, must be replaced with <<extend>>.
+Every single << include >>, except for those between creating chats and sending a message, must be replaced with << extend >>.
 #### Class:
 * "**+Scopes: array**" array of what??
 * "**+Message: text**" - "+text: Message"?
