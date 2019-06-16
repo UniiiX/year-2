@@ -2,7 +2,7 @@
 https://github.com/marynakukhta/Lab-First-2-semester-/tree/a27015c7420e457d3ef00d5e6675f605b4afc538
 
 ## Review
-1. Наскільки моделі є зрозумілими, наскільки вони описують предметну область, структуру та поведінку відповідної системи?
+### 1. Наскільки моделі є зрозумілими, наскільки вони описують предметну область, структуру та поведінку відповідної системи?
 #### Use Case:
 * **Chat with one contact** - no verb. "*Start* chat with one contact"?
 * **Delete from chat** - no subject. Delete what? Message?
@@ -40,16 +40,16 @@ https://github.com/marynakukhta/Lab-First-2-semester-/tree/a27015c7420e457d3ef00
 #### State:
 * **Press button**. Press which button??
 
-2. Чи є якісь аспекти, які видаються важливими, але не відображені в моделі (на діаграмах)?
+### 2. Чи є якісь аспекти, які видаються важливими, але не відображені в моделі (на діаграмах)?
 * Use Case: No search? (Even though it is depicted on the Activity diagram?)
 * Class Diagram: Classes timestamp, text are not depicted(are they even classes?).
 
-3. Чи є в моделі щось зайве, якісь аспекти описані занадто детально?
+### 3. Чи є в моделі щось зайве, якісь аспекти описані занадто детально?
 
-4. Наскільки доцільно використані різні типи діаграм?
+### 4. Наскільки доцільно використані різні типи діаграм?
 * State = Activity antipattern?
 
-5. Наскільки коректно використана нотація UML, різні елементи та конектори?
+### 5. Наскільки коректно використана нотація UML, різні елементи та конектори?
 #### Use Case:
 Every single <<include>>, except for those between creating chats and sending a message, must be replaced with <<extend>>.
 #### Class:
@@ -77,7 +77,7 @@ Every single <<include>>, except for those between creating chats and sending a 
 * I like how it is depicted that chat is client-sided. (Users can delete messages only for themselves, not affecting the state of interlocutor's chat)
 
 
-6. Наскільки вдалим є глосарій? Чи всі важливі поняття предметної області описано? Чи немає неоднозначностей?
+### 6. Наскільки вдалим є глосарій? Чи всі важливі поняття предметної області описано? Чи немає неоднозначностей?
 * All entities from Use Case daigram are absent in the glossary, which makes some aspects hard/impossible to understand.
 * No need to use word "class" at all. Client might have no idea what class is.
 * What is the difference between chat and group?(Activity diagram)
@@ -85,12 +85,12 @@ Every single <<include>>, except for those between creating chats and sending a 
 * What is the difference between smile and emoji?(First term is present on the State diagram the other one - on the Use Case diagram)
 * To sum up - awful.
 
-7. Чи всі важливі сценарії використання описано в моделі? Наскільки зрозумілі різні сценарії, зв’язки між ними?
+### 7. Чи всі важливі сценарії використання описано в моделі? Наскільки зрозумілі різні сценарії, зв’язки між ними?
 No search. As I've already mentioned, almost totally wrong usage of <<include>> on the Use Case diagram. 
 
-8. Наскільки доцільним є поділ системи на частини/компоненти/модулі/...?
+### 8. Наскільки доцільним є поділ системи на частини/компоненти/модулі/...?
 
-9. Наскільки доцільними є зв’язки між компонентами/класами/об’єктами? Чи немає занадто тісно зв’язаних компонентів?
+### 9. Наскільки доцільними є зв’язки між компонентами/класами/об’єктами? Чи немає занадто тісно зв’язаних компонентів?
 
-10. Наскільки object-oriented design відповідає загальним принципам?
+### 10. Наскільки object-oriented design відповідає загальним принципам?
 Class Diagram: ok.
