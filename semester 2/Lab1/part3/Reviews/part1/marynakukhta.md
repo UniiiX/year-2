@@ -25,7 +25,6 @@ https://github.com/marynakukhta/Lab-First-2-semester-/tree/a27015c7420e457d3ef00
 
 #### Class:
 * What is timestamp, text? text = string?
-* What is File? No such class.
 * What is time? No such class.
 * What is date? No such class.
 
