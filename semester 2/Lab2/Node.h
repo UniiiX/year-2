@@ -253,19 +253,19 @@ namespace bst
     template <typename K, typename V>
     inline void Node<K, V>::setGrandparent(Node* grandparent)
     {
-        this->value = value;
+        this->grandparent = grandparent;
     }
 
     template <typename K, typename V>
     inline void Node<K, V>::setUncle(Node* uncle)
     {
-        this->value = value;
+        this->uncle = uncle;
     }
 
     template <typename K, typename V>
     inline void Node<K, V>::setSibling(Node* sibling)
     {
-        this->value = value;
+        this->sibling = sibling;
     }
 
     template <typename K, typename V>
